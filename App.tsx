@@ -66,7 +66,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <Text>Hadisss</Text>
+      <Text>Hadi</Text>
     </SafeAreaView>
   );
 };
