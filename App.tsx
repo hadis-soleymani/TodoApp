@@ -8,85 +8,82 @@
  * @format
  */
 
-import React, {type PropsWithChildren} from 'react';
+import React, { useState } from "react";
 import {
+  TextInput,
+  Button,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section: React.FC<
-  PropsWithChildren<{
-    title: string;
-  }>
-> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+} from "react-native";
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [goal, setGoal] = useState("");
+  const [goals, setGoals] = useState<string[]>([]);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const inputHandler = (text: string) => {
+    setGoal(text);
+  };
+
+  const addGoalHandler = () => {
+    setGoals((currentGoals) => [...currentGoals, goal]);
+    console.log(goals);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <Text>Hadi</Text>
+    <SafeAreaView>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your goals ..."
+          onChangeText={inputHandler}
+        />
+        <Button title="Add goal" onPress={addGoalHandler}></Button>
+      </View>
+      <View style={styles.listContainer}>
+        {goals.map((item) => (
+          <View style={styles.goalView} key={item}>
+            <Text style={styles.goal}>{item}</Text>
+          </View>
+        ))}
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 16,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  textInput: {
+    margin: 16,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    padding: 16,
+    borderRadius: 16,
+    flex: 3,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  button: {
+    flex: 1,
+    margin: 16,
   },
-  highlight: {
-    fontWeight: '700',
+  listContainer: {
+    margin: 16,
+  },
+  goalView: {
+    backgroundColor: "tomato",
+    padding: 16,
+    marginVertical: 8,
+    borderRadius: 16,
+  },
+  goal: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
 
