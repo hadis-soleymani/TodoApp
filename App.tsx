@@ -16,6 +16,7 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList,
 } from "react-native";
 
 const App = () => {
@@ -42,11 +43,18 @@ const App = () => {
         <Button title="Add goal" onPress={addGoalHandler}></Button>
       </View>
       <View style={styles.listContainer}>
-        {goals.map((item) => (
-          <View style={styles.goalView} key={item}>
-            <Text style={styles.goal}>{item}</Text>
-          </View>
-        ))}
+        <FlatList
+          data={goals}
+          alwaysBounceVertical={false}
+          renderItem={(item) => {
+            return (
+              <View style={styles.goalView}>
+                <Text style={styles.goal}>{item.item}</Text>
+              </View>
+            );
+          }}
+        />
+        
       </View>
     </SafeAreaView>
   );
