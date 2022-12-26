@@ -9,18 +9,20 @@
  */
 
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
+import { SafeAreaView, StyleSheet, View, FlatList, Button } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 const App = () => {
   const [goals, setGoals] = useState<{ text: string; key: string }[]>([]);
+  const [modalVisibled, setModalVisibled]=useState(false);
 
   const addGoalHandler = (enteredGoalText: string) => {
     setGoals((currentGoals) => [
       ...currentGoals,
       { text: enteredGoalText, key: Math.random().toString() },
     ]);
+    modalHandler()
   };
 
   const deleteGoal = (id: string) => {
@@ -30,9 +32,14 @@ const App = () => {
     });
   };
 
+  const modalHandler=()=>{
+    setModalVisibled(!modalVisibled)
+  }
+
   return (
     <SafeAreaView>
-      <GoalInput onPress={addGoalHandler} />
+      <Button title="write goal" color="tomato" onPress={modalHandler}/>
+      <GoalInput onPress={addGoalHandler} visible={modalVisibled} />
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
