@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 interface Item {
-  item: string;
+  item: { text: string; key: string };
+  onDeleteHandler: (id: string) => void;
 }
-const GoalItem: React.FC<Item> = ({ item }) => {
-  return (
-    <View style={styles.goalView}>
-      <Text style={styles.goal}>{item}</Text>
-    </View>
+const GoalItem: React.FC<Item> = ({ item, onDeleteHandler }) => {
+  console.log(item)
+    return (
+    <Pressable onPress={onDeleteHandler.bind(this, item.key)}>
+      <View style={styles.goalView}>
+        <Text style={styles.goal}>{item.text}</Text>
+      </View>
+    </Pressable>
   );
 };
 

@@ -14,10 +14,20 @@ import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 const App = () => {
-  const [goals, setGoals] = useState<string[]>([]);
+  const [goals, setGoals] = useState<{ text: string; key: string }[]>([]);
 
   const addGoalHandler = (enteredGoalText: string) => {
-    setGoals((currentGoals) => [...currentGoals, enteredGoalText]);
+    setGoals((currentGoals) => [
+      ...currentGoals,
+      { text: enteredGoalText, key: Math.random().toString() },
+    ]);
+  };
+
+  const deleteGoal = (id: string) => {
+    console.log("delete");
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.key !== id);
+    });
   };
 
   return (
@@ -28,7 +38,7 @@ const App = () => {
           data={goals}
           alwaysBounceVertical={false}
           renderItem={(item) => {
-            return <GoalItem item={item.item} />;
+            return <GoalItem item={item.item} onDeleteHandler={deleteGoal} />;
           }}
         />
       </View>
