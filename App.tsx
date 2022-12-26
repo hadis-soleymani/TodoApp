@@ -14,21 +14,15 @@ import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 const App = () => {
-  const [goal, setGoal] = useState("");
   const [goals, setGoals] = useState<string[]>([]);
 
-  const inputHandler = (text: string) => {
-    setGoal(text);
-  };
-
-  const addGoalHandler = () => {
-    setGoals((currentGoals) => [...currentGoals, goal]);
-    console.log(goals);
+  const addGoalHandler = (enteredGoalText: string) => {
+    setGoals((currentGoals) => [...currentGoals, enteredGoalText]);
   };
 
   return (
     <SafeAreaView>
-      <GoalInput onChangeText={inputHandler} onPress={addGoalHandler} />
+      <GoalInput onPress={addGoalHandler} />
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
